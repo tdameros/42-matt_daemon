@@ -11,6 +11,7 @@ include src.mk
 DIR_BUILD		=	.build/
 DIR_SRC 		=	src/
 DIR_INCLUDE		=	include/
+DIR_INCLUDES	=	$(DIR_INCLUDE)
 
 # ------------- SHORTCUTS ------------- #
 
