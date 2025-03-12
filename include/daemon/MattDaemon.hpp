@@ -3,7 +3,7 @@
 #define DAEMON_MATTDAEMON_HPP
 
 #include "Daemon.hpp"
-#include "server/server.hpp"
+#include "server/Server.hpp"
 
 class MattDaemon : public Daemon {
 public:
