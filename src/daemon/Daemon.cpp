@@ -15,14 +15,14 @@
 
 Daemon *Daemon::_instance = nullptr;
 
-Daemon::Daemon() : _name("daemon") {}
+Daemon::Daemon() : _name("daemon"), _hasLockFile(false) {}
 
-Daemon::Daemon(const std::string &name) : _name(name) {}
+Daemon::Daemon(const std::string &name) : _name(name), _hasLockFile(false) {}
 
 Daemon::Daemon(const Daemon &other) { *this = other; }
 
 Daemon::~Daemon() {
-  if (_lockFileFD != -1) {
+  if (_hasLockFile) {
     this->_removeLockFile();
     logging::info("Daemon stopped");
   }
@@ -104,6 +104,7 @@ bool Daemon::_tryLockFile() {
     return false;
   }
   _lockFileFD = fd;
+  _hasLockFile = true;
   return true;
 }
 

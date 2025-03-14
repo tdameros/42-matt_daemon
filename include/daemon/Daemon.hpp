@@ -28,9 +28,11 @@ private:
   static void _signalHandler(int signum);
 
   static Daemon *_instance;
+
+  std::string _name;
   pid_t _pid;
   int _lockFileFD;
-  std::string _name;
+  bool _hasLockFile;
 };
 
 #endif
