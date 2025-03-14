@@ -24,8 +24,8 @@ Daemon::Daemon(const Daemon &other) { *this = other; }
 Daemon::~Daemon() {
   if (_lockFileFD != -1) {
     this->_removeLockFile();
+    logging::info("Daemon stopped");
   }
-  logging::info("Daemon stopped");
 }
 
 Daemon &Daemon::operator=(const Daemon &other) {
@@ -94,11 +94,13 @@ bool Daemon::_tryLockFile() {
   int fd = open(this->_getLockFilePath().c_str(), O_RDWR | O_CREAT);
   if (fd == -1) {
     std::cerr << "open(" + this->_getLockFilePath() + ") failed" << std::endl;
+    logging::error("failed to lock file");
     return false;
   }
   if (flock(fd, LOCK_EX | LOCK_NB) == -1) {
     close(fd);
     std::cerr << "lockf(" + this->_getLockFilePath() + ") failed" << std::endl;
+    logging::error("failed to lock file");
     return false;
   }
   _lockFileFD = fd;
